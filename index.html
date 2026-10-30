@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -28,8 +29,7 @@ button:disabled{opacity:.45;cursor:default}
 .back-btn{color:#007aff;font-size:32px;padding:0 10px;line-height:1}
 .chat-profile{flex:1;display:flex;flex-direction:column;align-items:center}
 .chat-profile .avatar{width:36px;height:36px;font-size:16px}
-.chat-profile .name{font-size:12px;margin-top:2px}
-.messages{flex:1;overflow:auto;padding:14px;display:flex;flex-direction:column;gap:8px}
+.chat-profile .name{font-size:12px;margin-top:2px}.messages{flex:1;overflow:auto;padding:14px;display:flex;flex-direction:column;gap:8px}
 .msg-row{display:flex;flex-direction:column;align-items:flex-start;max-width:100%;margin-bottom:4px}
 .msg-row.me{align-items:flex-end}
 .bubble{max-width:80%;padding:8px 12px;border-radius:18px;background:#262629;font-size:16px;line-height:1.4;word-break:break-word;position:relative;user-select:none;-webkit-user-select:none}
@@ -73,23 +73,14 @@ button:disabled{opacity:.45;cursor:default}
 </head>
 <body>
 <div class="app">
-  <!-- 通讯录页 -->
   <section class="page active" id="contactsPage">
-    <div class="header" style="align-items:flex-end">
-      <h1>信息</h1>
-      <button class="btn-text" id="newContactBtn">＋</button>
-    </div>
+    <div class="header" style="align-items:flex-end"><h1>信息</h1><button class="btn-text" id="newContactBtn">＋</button></div>
     <div class="contact-list" id="contactList"></div>
   </section>
-
-  <!-- 聊天页 -->
   <section class="page hide" id="chatPage">
     <div class="chat-header">
       <button class="back-btn" id="backBtn">‹</button>
-      <div class="chat-profile">
-        <div class="avatar" id="chatAvatar"></div>
-        <div class="name" id="chatName"></div>
-      </div>
+      <div class="chat-profile"><div class="avatar" id="chatAvatar"></div><div class="name" id="chatName"></div></div>
       <div style="width:40px"></div>
     </div>
     <div class="messages" id="messages"></div>
@@ -98,25 +89,15 @@ button:disabled{opacity:.45;cursor:default}
       <input id="textInput" placeholder="iMessage信息" autocomplete="off">
       <button class="send-btn" id="sendBtn">↑</button>
     </div>
-  </section>
-
-  <!-- 弹窗 -->
-  <div class="overlay" id="newContactModal">
+  </section><div class="overlay" id="newContactModal">
     <div class="sheet">
       <div class="sheet-title">新建联系人</div>
-      <div class="form-group">
-        <label>姓名 / 备注</label>
-        <input id="newName" placeholder="输入名字">
-      </div>
-      <div class="form-group">
-        <label>手机号码</label>
-        <input id="newPhone" placeholder="+86 139 9999 9999">
-      </div>
+      <div class="form-group"><label>姓名 / 备注</label><input id="newName" placeholder="输入名字"></div>
+      <div class="form-group"><label>手机号码</label><input id="newPhone" placeholder="+86 139 9999 9999"></div>
       <button class="btn-text" style="width:100%;text-align:center;padding:15px;background:#0b84ff;border-radius:10px;color:#fff;margin-bottom:10px;font-weight:bold" onclick="saveNewContact()">保存</button>
       <button class="btn-text" style="width:100%;text-align:center;color:#ff453a;padding:10px" onclick="closeModal('newContactModal')">取消</button>
     </div>
   </div>
-
   <div class="overlay" id="plusModal">
     <div class="sheet">
       <div class="grid-tools">
@@ -129,20 +110,13 @@ button:disabled{opacity:.45;cursor:default}
       <button class="btn-text" style="width:100%;text-align:center;color:#ff453a;padding:10px" onclick="closeModal('plusModal')">取消</button>
     </div>
   </div>
-
   <div class="overlay" id="emojiModal">
-    <div class="sheet">
-      <div class="emoji-pad" id="emojiPad"></div>
-      <button class="btn-text" style="width:100%;text-align:center;color:#ff453a;padding:10px" onclick="closeModal('emojiModal')">取消</button>
-    </div>
+    <div class="sheet"><div class="emoji-pad" id="emojiPad"></div><button class="btn-text" style="width:100%;text-align:center;color:#ff453a;padding:10px" onclick="closeModal('emojiModal')">取消</button></div>
   </div>
-
   <div class="overlay" id="locModal">
     <div class="sheet">
       <div class="sheet-title">发送位置</div>
-      <div class="form-group">
-        <input id="locSearchInput" placeholder="搜索或自定义位置..." onkeyup="if(event.key==='Enter') doLocSearch()">
-      </div>
+      <div class="form-group"><input id="locSearchInput" placeholder="搜索或自定义位置..." onkeyup="if(event.key==='Enter') doLocSearch()"></div>
       <div class="loc-results" id="locResults">
         <div class="loc-item" onclick="selectLoc('图书馆')">📍 图书馆</div>
         <div class="loc-item" onclick="selectLoc('咖啡厅')">📍 咖啡厅</div>
@@ -152,236 +126,242 @@ button:disabled{opacity:.45;cursor:default}
       <button class="btn-text" style="width:100%;text-align:center;color:#ff453a;padding:10px" onclick="closeModal('locModal')">取消</button>
     </div>
   </div>
-
   <div class="record-overlay" id="recordOverlay">
-    <div class="record-icon">🎙️</div>
-    <div style="font-size:24px;margin-bottom:10px">正在录音...</div>
+    <div class="record-icon">🎙️</div><div style="font-size:24px;margin-bottom:10px">正在录音...</div>
     <div id="recordTime" style="font-size:36px;font-weight:bold;margin-bottom:30px">0:00</div>
     <button class="btn-text" style="background:#ff453a;color:#fff;padding:12px 30px;border-radius:24px;font-size:18px" onclick="stopRecording()">松开结束</button>
   </div>
-
   <input type="file" id="uploadImg" accept="image/*" style="display:none" onchange="handleImage(this)">
   <input type="file" id="cameraImg" accept="image/*" capture="environment" style="display:none" onchange="handleImage(this)">
-
   <div class="action-menu" id="actionMenu">
     <button id="menuTranslate" onclick="translateVoice()">翻译为简体中文</button>
     <button class="red" onclick="deleteMsg()">删除</button>
   </div>
 </div>
+<script>
+let contacts = JSON.parse(localStorage.getItem('im_contacts')) || [
+  { id: '1', name: '小雨', phone: '+86 139 9999 9999', avatar: '雨' },
+  { id: '2', name: '李华', phone: '+86 138 8888 8888', avatar: '华' }
+];
+let chats = JSON.parse(localStorage.getItem('im_chats')) || {
+  '1': [
+    { id: 'm1', role: 'user', type: 'text', content: '在干嘛呢？', time: Date.now() - 3600000 },
+    { id: 'm2', role: 'assistant', type: 'text', content: '刚下课，准备去吃饭了。', time: Date.now() - 3500000 }
+  ]
+};
+let activeContactId = null;
+let msgTimer = null;
+let mediaRecorder = null;
+let audioChunks = [];
+let recordInterval = null;
+let recordSeconds = 0;
+let currentActionMsgId = null;
+let isPlayingAudio = null;
+
+function saveData() {
+localStorage.setItem('im_contacts', JSON.stringify(contacts));
+localStorage.setItem('im_chats', JSON.stringify(chats));
+}
+
+function renderContacts() {
+const list = document.getElementById('contactList');
+list.innerHTML = contacts.map(c => {
+const cChats = chats[c.id] || [];
+const lastMsg = cChats[cChats.length - 1];
+let preview = '暂无消息';
+if (lastMsg) {
+if (lastMsg.type === 'text') preview = lastMsg.content;
+else if (lastMsg.type === 'image') preview = '[图片]';
+else if (lastMsg.type === 'voice') preview = '[语音]';
+else if (lastMsg.type === 'location') preview = [位置: ${lastMsg.content}];
+}
+return 
+      <div class="contact-item" onclick="openChat('${c.id}')">
+        <div class="avatar">${c.avatar || c.name[0]}</div>
+        <div class="contact-info">
+          <div class="contact-name">${c.name}</div>
+          <div class="contact-preview">${preview}</div>
+        </div>
+      </div>
+    ;
+}).join('');
+}
+
+function openChat(id) {
+activeContactId = id;
+const contact = contacts.find(c => c.id === id);
+document.getElementById('chatName').textContent = contact.name + ' ' + contact.phone;
+document.getElementById('chatAvatar').textContent = contact.avatar || contact.name[0];
+document.getElementById('contactsPage').classList.remove('active');
+document.getElementById('contactsPage').classList.add('hide');
+document.getElementById('chatPage').classList.remove('hide');
+document.getElementById('chatPage').classList.add('active');
+renderMessages();
+document.getElementById('chatPage').style.display = 'flex';
+}
+
+function goBack() {
+if (isPlayingAudio) { isPlayingAudio.pause(); isPlayingAudio = null; }
+document.getElementById('chatPage').classList.add('hide');
+document.getElementById('chatPage').classList.remove('active');
+document.getElementById('contactsPage').classList.remove('hide');
+document.getElementById('contactsPage').classList.add('active');
+renderContacts();
+activeContactId = null;
+}
+
+function renderMessages() {
+const box = document.getElementById('messages');
+const msgs = chats[activeContactId] || [];
+box.innerHTML = '';
+msgs.forEach(m => {
+const row = document.createElement('div');
+row.className = 'msg-row ' + (m.role === 'user' ? 'me' : '');
+if (m.showTranscript) row.classList.add('show-transcript');
+let inner = '';
+if (m.type === 'text') inner = <div class="bubble" oncontextmenu="showMsgMenu(event, '${m.id}')">${m.content}</div>;
+else if (m.type === 'image') inner = <div class="bubble img-bubble" oncontextmenu="showMsgMenu(event, '${m.id}')"><img src="${m.content}"></div>;
+else if (m.type === 'location') inner = <div class="bubble" oncontextmenu="showMsgMenu(event, '${m.id}')">📍 ${m.content}</div>;
+else if (m.type === 'voice') inner = <div class="bubble voice-bubble" oncontextmenu="showMsgMenu(event, '${m.id}')" onclick="playVoice('${m.content}')"><span>▶</span> <div class="voice-wave">～ ${m.duration || 3}"</div></div><div class="voice-transcript">${m.transcript || '翻译中...'}</div>;
+row.innerHTML = inner;
+box.appendChild(row);
+});
+box.scrollTop = box.scrollHeight;
+}
+
 function sendMsg(type, content, extra = {}) {
-  if (!activeContactId) return;
-  const msg = {
-    id: 'm' + Date.now() + Math.random().toString(36).substr(2,4),
-    role: 'user',
-    type: type,
-    content: content,
-    time: Date.now(),
-    ...extra
-  };
-  if (!chats[activeContactId]) chats[activeContactId] = [];
-  chats[activeContactId].push(msg);
-  saveData();
-  renderMessages();
-  triggerAiReply(type, content);
+if (!activeContactId) return;
+const msg = { id: 'm' + Date.now() + Math.random().toString(36).substr(2,4), role: 'user', type: type, content: content, time: Date.now(), ...extra };
+if (!chats[activeContactId]) chats[activeContactId] = [];
+chats[activeContactId].push(msg);
+saveData(); renderMessages(); triggerAiReply(type, content);
 }
 
 function triggerAiReply(type, content) {
-  clearTimeout(msgTimer);
-  msgTimer = setTimeout(() => {
-    let replyContent = "收到啦！";
-    if (type === 'text') replyContent = "哈哈，挺好的。";
-    if (type === 'image') replyContent = "图片拍得不错啊！";
-    if (type === 'voice') replyContent = "你发的语音我听了。";
-    if (type === 'location') replyContent = `你去 ${content} 了呀，好玩吗？`;
-
-    const msg = {
-      id: 'm' + Date.now() + Math.random().toString(36).substr(2,4),
-      role: 'assistant',
-      type: 'text',
-      content: replyContent,
-      time: Date.now()
-    };
-    chats[activeContactId].push(msg);
-    saveData();
-    renderMessages();
-  }, 1500);
+clearTimeout(msgTimer);
+msgTimer = setTimeout(() => {
+let replyContent = "收到啦！";
+if (type === 'text') replyContent = "哈哈，挺好的。";
+if (type === 'image') replyContent = "图片拍得不错啊！";
+if (type === 'voice') replyContent = "你发的语音我听了。";
+if (type === 'location') replyContent = 你去 ${content} 了呀，好玩吗？;
+const msg = { id: 'm' + Date.now() + Math.random().toString(36).substr(2,4), role: 'assistant', type: 'text', content: replyContent, time: Date.now() };
+chats[activeContactId].push(msg);
+saveData(); renderMessages();
+}, 1500);
 }
 
 document.getElementById('sendBtn').onclick = () => {
-  const input = document.getElementById('textInput');
-  if (input.value.trim()) {
-    sendMsg('text', input.value.trim());
-    input.value = '';
-  }
+const input = document.getElementById('textInput');
+if (input.value.trim()) { sendMsg('text', input.value.trim()); input.value = ''; }
 };
-document.getElementById('textInput').addEventListener('keydown', e => {
-  if (e.key === 'Enter') {
-    document.getElementById('sendBtn').click();
-  }
-});
-
+document.getElementById('textInput').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('sendBtn').click(); });
 document.getElementById('plusBtn').onclick = () => document.getElementById('plusModal').classList.add('show');
 document.getElementById('backBtn').onclick = goBack;
 document.getElementById('newContactBtn').onclick = () => document.getElementById('newContactModal').classList.add('show');
-
 function closeModal(id) { document.getElementById(id).classList.remove('show'); }
 
 function saveNewContact() {
-  const name = document.getElementById('newName').value.trim();
-  const phone = document.getElementById('newPhone').value.trim() || '+86 139 9999 9999';
-  if (!name) return alert('请输入名字');
-  contacts.push({ id: Date.now().toString(), name, phone, avatar: name[0] });
-  saveData();
-  closeModal('newContactModal');
-  renderContacts();
-  document.getElementById('newName').value = '';
-  document.getElementById('newPhone').value = '';
+const name = document.getElementById('newName').value.trim();
+const phone = document.getElementById('newPhone').value.trim() || '+86 139 9999 9999';
+if (!name) return alert('请输入名字');
+contacts.push({ id: Date.now().toString(), name, phone, avatar: name[0] });
+saveData(); closeModal('newContactModal'); renderContacts();
+document.getElementById('newName').value = ''; document.getElementById('newPhone').value = '';
+}function openEmoji() {
+closeModal('plusModal');
+const pad = document.getElementById('emojiPad');
+const emojis = ['😀','😂','🥰','😎','😭','😡','👍','🙏','🎉','❤️','🔥','🌟','🍎','🐶','🚗','🏠','☕','🌙'];
+pad.innerHTML = emojis.map(e => <button onclick="insertEmoji('${e}')">${e}</button>).join('');
+document.getElementById('emojiModal').classList.add('show');
 }
-
-function openEmoji() {
-  closeModal('plusModal');
-  const pad = document.getElementById('emojiPad');
-  const emojis = ['😀','😂','🥰','😎','😭','😡','👍','🙏','🎉','❤️','🔥','🌟','🍎','🐶','🚗','🏠','☕','🌙'];
-  pad.innerHTML = emojis.map(e => `<button onclick="insertEmoji('${e}')">${e}</button>`).join('');
-  document.getElementById('emojiModal').classList.add('show');
-}
-function insertEmoji(e) {
-  const input = document.getElementById('textInput');
-  input.value += e;
-  input.focus();
-}
+function insertEmoji(e) { const input = document.getElementById('textInput'); input.value += e; input.focus(); }
 
 function handleImage(input) {
-  if (input.files && input.files[0]) {
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      sendMsg('image', e.target.result);
-      input.value = '';
-      closeModal('plusModal');
-    };
-    reader.readAsDataURL(input.files[0]);
-  }
+if (input.files && input.files[0]) {
+const reader = new FileReader();
+reader.onload = function(e) { sendMsg('image', e.target.result); input.value = ''; closeModal('plusModal'); };
+reader.readAsDataURL(input.files[0]);
 }
-
+}
 function openCamera() { document.getElementById('cameraImg').click(); }
 
-function openLocation() {
-  closeModal('plusModal');
-  document.getElementById('locModal').classList.add('show');
-}
+function openLocation() { closeModal('plusModal'); document.getElementById('locModal').classList.add('show'); }
 function doLocSearch() {
-  const val = document.getElementById('locSearchInput').value.trim();
-  if (!val) return;
-  const res = document.getElementById('locResults');
-  res.innerHTML = `<div class="loc-item" onclick="selectLoc('${val}')">📍 使用自定义位置: ${val}</div>`;
+const val = document.getElementById('locSearchInput').value.trim();
+if (!val) return;
+document.getElementById('locResults').innerHTML = <div class="loc-item" onclick="selectLoc('${val}')">📍 使用自定义位置: ${val}</div>;
 }
-function selectLoc(name) {
-  sendMsg('location', name);
-  closeModal('locModal');
-  document.getElementById('locSearchInput').value = '';
-  doLocSearchReset();
-}
+function selectLoc(name) { sendMsg('location', name); closeModal('locModal'); document.getElementById('locSearchInput').value = ''; doLocSearchReset(); }
 function doLocSearchReset() {
-  document.getElementById('locResults').innerHTML = `
+document.getElementById('locResults').innerHTML = 
     <div class="loc-item" onclick="selectLoc('图书馆')">📍 图书馆</div>
     <div class="loc-item" onclick="selectLoc('咖啡厅')">📍 咖啡厅</div>
     <div class="loc-item" onclick="selectLoc('学校')">📍 学校</div>
     <div class="loc-item" onclick="selectLoc('家')">📍 家</div>
-  `;
+  ;
 }
+
 async function startRecording() {
-  closeModal('plusModal');
-  try {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    mediaRecorder = new MediaRecorder(stream);
-    audioChunks = [];
-    mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
-    
-    mediaRecorder.onstop = () => {
-      const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-      const reader = new FileReader();
-      reader.readAsDataURL(audioBlob);
-      reader.onloadend = () => {
-        sendMsg('voice', reader.result, { duration: recordSeconds });
-      };
-      stream.getTracks().forEach(t => t.stop());
-    };
-    
-    mediaRecorder.start();
-    document.getElementById('recordOverlay').classList.add('show');
-    recordSeconds = 0;
-    document.getElementById('recordTime').textContent = '0:00';
-    recordInterval = setInterval(() => {
-      recordSeconds++;
-      document.getElementById('recordTime').textContent = '0:' + (recordSeconds < 10 ? '0' : '') + recordSeconds;
-      if (recordSeconds >= 60) stopRecording();
-    }, 1000);
-    
-  } catch (err) {
-    alert('无法访问麦克风，请确保使用 HTTPS 链接并且允许了权限。');
-  }
+closeModal('plusModal');
+try {
+const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+mediaRecorder = new MediaRecorder(stream); audioChunks = [];
+mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+mediaRecorder.onstop = () => {
+const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+const reader = new FileReader();
+reader.readAsDataURL(audioBlob);
+reader.onloadend = () => { sendMsg('voice', reader.result, { duration: recordSeconds }); };
+stream.getTracks().forEach(t => t.stop());
+};
+mediaRecorder.start();
+document.getElementById('recordOverlay').classList.add('show');
+recordSeconds = 0; document.getElementById('recordTime').textContent = '0:00';
+recordInterval = setInterval(() => {
+recordSeconds++;
+document.getElementById('recordTime').textContent = '0:' + (recordSeconds < 10 ? '0' : '') + recordSeconds;
+if (recordSeconds >= 60) stopRecording();
+}, 1000);
+} catch (err) { alert('无法访问麦克风，请确保使用 HTTPS 链接并且允许了权限。'); }
 }
 function stopRecording() {
-  if (mediaRecorder && mediaRecorder.state !== 'inactive') {
-    mediaRecorder.stop();
-    clearInterval(recordInterval);
-    document.getElementById('recordOverlay').classList.remove('show');
-  }
+if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+mediaRecorder.stop(); clearInterval(recordInterval);
+document.getElementById('recordOverlay').classList.remove('show');
 }
-
+}
 function playVoice(url) {
-  if (isPlayingAudio) { isPlayingAudio.pause(); isPlayingAudio = null; return; }
-  isPlayingAudio = new Audio(url);
-  isPlayingAudio.play();
-  isPlayingAudio.onended = () => { isPlayingAudio = null; };
+if (isPlayingAudio) { isPlayingAudio.pause(); isPlayingAudio = null; return; }
+isPlayingAudio = new Audio(url); isPlayingAudio.play();
+isPlayingAudio.onended = () => { isPlayingAudio = null; };
 }
-
 document.addEventListener('contextmenu', e => e.preventDefault());
-
 function showMsgMenu(e, id) {
-  e.preventDefault();
-  currentActionMsgId = id;
-  const menu = document.getElementById('actionMenu');
-  const msg = chats[activeContactId].find(m => m.id === id);
-  
-  const transBtn = document.getElementById('menuTranslate');
-  if (msg.type === 'voice') {
-    transBtn.style.display = 'block';
-  } else {
-    transBtn.style.display = 'none';
-  }
-  
-  const rect = e.target.getBoundingClientRect();
-  menu.style.left = Math.min(rect.left, window.innerWidth - 150) + 'px';
-  menu.style.top = (rect.bottom + 5) + 'px';
-  menu.classList.add('show');
+e.preventDefault(); currentActionMsgId = id;
+const menu = document.getElementById('actionMenu');
+const msg = chats[activeContactId].find(m => m.id === id);
+document.getElementById('menuTranslate').style.display = (msg.type === 'voice') ? 'block' : 'none';
+const rect = e.target.getBoundingClientRect();
+menu.style.left = Math.min(rect.left, window.innerWidth - 150) + 'px';
+menu.style.top = (rect.bottom + 5) + 'px';
+menu.classList.add('show');
 }
-
-document.addEventListener('click', e => {
-  if (!e.target.closest('.action-menu')) {
-    document.getElementById('actionMenu').classList.remove('show');
-  }
-});
-
+document.addEventListener('click', e => { if (!e.target.closest('.action-menu')) document.getElementById('actionMenu').classList.remove('show'); });
 function translateVoice() {
-  const msg = chats[activeContactId].find(m => m.id === currentActionMsgId);
-  if (msg && msg.type === 'voice') {
-    msg.transcript = "【语音转文字】这是一段模拟的语音翻译内容。";
-    msg.showTranscript = true;
-    saveData();
-    renderMessages();
-  }
-  document.getElementById('actionMenu').classList.remove('show');
+const msg = chats[activeContactId].find(m => m.id === currentActionMsgId);
+if (msg && msg.type === 'voice') {
+msg.transcript = "【语音转文字】这是一段模拟的语音翻译内容。";
+msg.showTranscript = true; saveData(); renderMessages();
 }
-
+document.getElementById('actionMenu').classList.remove('show');
+}
 function deleteMsg() {
-  chats[activeContactId] = chats[activeContactId].filter(m => m.id !== currentActionMsgId);
-  saveData();
-  renderMessages();
-  document.getElementById('actionMenu').classList.remove('show');
+chats[activeContactId] = chats[activeContactId].filter(m => m.id !== currentActionMsgId);
+saveData(); renderMessages(); document.getElementById('actionMenu').classList.remove('show');
 }
-
 renderContacts();
 </script>
+
 </body>
 </html>
